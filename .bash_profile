@@ -19,10 +19,20 @@
 #   1.  ENVIRONMENT CONFIGURATION
 #   -------------------------------
 
+#   Colors
+#black='\e[0;30m'
+#blue='\e[0;34m'
+#green='\e[0;32m'
+#red='\e[e;31m'
+#purple='\e[0;34m'
+#light_grey='\e[0;37m'
+#yellow='\e[0;33m'
+#white='\e[0;37m'
+
+
 #   Change Prompt
 #   ------------------------------------------------------------
-    export PS1="________________________________________________________________________________\n| \w @ \h (\u) \n| => "
-    
+   export PS1='\e[1;34m________________________________________________________\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W\e[m\e[0;32m$(__git_ps1 " (%s)\e[m")]\$  \n\e[1;34m| =>\e[m ' 
 
 #   Set Paths
 #   ------------------------------------------------------------
@@ -39,6 +49,8 @@ export PATH=$PATH:/usr/local/go/bin
 ##
 # Your previous /Users/Chris/.bash_profile file was backed up as /Users/Chris/.bash_profile.macports-saved_2014-08-22_at_20:26:22
 ##
+source ~/.git-prompt.sh
+source ~/.bashrc
 
 # MacPorts Installer addition on 2014-08-22_at_20:26:22: adding an appropriate PATH variable for use with MacPorts.
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
