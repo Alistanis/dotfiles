@@ -32,7 +32,18 @@
 
 #   Change Prompt
 #   ------------------------------------------------------------
-   export PS1='\e[1;34m________________________________________________________\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W\e[m\e[0;32m$(__git_ps1 " (%s)\e[m")]\$  \n\e[1;34m| =>\e[m ' 
+
+col=$COLUMNS
+num="0"
+str="_"
+print_columns() {
+col=$COLUMNS
+  while [ $num -lt $col ]; do
+  	printf "\e[1;34m_"
+        num=$[$num + 1]
+  done
+}
+   export PS1='$(print_columns)\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W\e[m\e[0;32m$(__git_ps1 " (%s)\e[m")]  \n\e[1;34m| =>\e[m ' 
 
 #   Set Paths
 #   ------------------------------------------------------------
@@ -110,6 +121,7 @@ export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
+
 create-rspec-dirs () { 
  mkdir $1; 
  mkdir $1/features; 
