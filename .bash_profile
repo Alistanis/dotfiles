@@ -29,7 +29,6 @@
 #yellow='\e[0;33m'
 #white='\e[0;37m'
 
-
 #   Change Prompt
 #   ------------------------------------------------------------
 
@@ -39,16 +38,17 @@ str="_"
 print_columns() {
 col=$COLUMNS
   while [ $num -lt $col ]; do
-  	printf "\e[1;34m_"
+        printf "\e[1;34m_"
         num=$[$num + 1]
   done
 }
-   export PS1='$(print_columns)\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W\e[m\e[0;32m$(__git_ps1 " (%s)\e[m")]  \n\e[1;34m| =>\e[m ' 
+
+export PS1='\n$(print_columns)\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W\e[m\e[0;32m$(__git_ps1 " (%s)\e[m")] \n\[\e[1;34m\]| => \[\e[m\]' 
 
 #   Set Paths
 #   ------------------------------------------------------------
     export PATH="$PATH:/usr/local/bin/"
-    export PATH="/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
+    export PATH="/usr/local/git/bin:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
     alias go='/usr/local/go/bin/go'
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
 export COCOS_CONSOLE_ROOT=/Users/Chris/Downloads/cocos2d-x-3.2/tools/cocos2d-console/bin
@@ -83,6 +83,7 @@ export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 #   export CLICOLOR=1
 #   export LSCOLORS=ExFxBxDxCxegedabagacad
 
+
 #   -----------------------------
 #   2.  MAKE TERMINAL BETTER
 #   -----------------------------
@@ -92,7 +93,7 @@ alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
-cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+cd() { builtin cd "$@"; ls; }               # Always list directory contents upon 'cd'
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
 alias ..='cd ../'                           # Go back 1 directory level
 alias ...='cd ../../'                       # Go back 2 directory levels
@@ -114,11 +115,12 @@ trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the 
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
 
+alias rubymine='/Applications/RubyMine.app/Contents/MacOS/rubymine'
+alias rm='rubymine'
+
 alias scan-objc='/usr/local/bin/checker-276/scan-build'
 alias getPid='ps aux | grep -i'
 alias bchunk='/usr/bin/bchunk'
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/bin:$PATH
 alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
 
@@ -130,6 +132,7 @@ create-rspec-dirs () {
  mkdir $1/spec;
  touch $1/features/support/env.rb; 
 }
+
 
 alias crd='create-rspec-dirs'
 
@@ -178,7 +181,7 @@ EOT
         cd "$currFolderPath"
     }
 
-#   extract:  Extract most know archives with one command
+#   extract:  Extract most known archives with one command
 #   ---------------------------------------------------------
     extract () {
         if [ -f $1 ] ; then
@@ -347,5 +350,6 @@ httpHeaders () { /usr/bin/curl -I -L $@ ; }             # httpHeaders:      Grab
 #   e.g.: hdiutil create -size 10m 10MB.dmg
 #   the above create files that are almost all zeros - if random bytes are desired
 #   then use: ~/Dev/Perl/randBytes 1048576 > 10MB.dat
+
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
