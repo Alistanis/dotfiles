@@ -124,6 +124,26 @@ alias bchunk='/usr/bin/bchunk'
 alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
 
+#will return all results minus grep, useful for ps
+grepv () {
+ grep -i $1 | grep -v 'grep'	
+}
+
+#runs ps aux with grep -i var | grep -v 'grep'
+fpid () {
+ ps aux | grepv $1	
+}
+
+#runs fpid, prints the second column of ps aux (the process pid) and kills all processes in the list with -9
+killprocs () {
+ fpid $1 | awk '{print $2}' | xargs kill -9	
+}
+
+#sends a sig HUP to all processes found
+killhup () {
+ fpid $1 | awk '{print $2}' | xargs kill -HUP	
+}
+
 create-rspec-dirs () { 
  mkdir $1; 
  mkdir $1/features; 
