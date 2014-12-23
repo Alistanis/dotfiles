@@ -115,14 +115,17 @@ trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the 
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
 
+alias cloc='perl /usr/local/etc/cloc-1.62.pl'
+
 alias rubymine='/Applications/RubyMine.app/Contents/MacOS/rubymine'
-alias rm='rubymine'
 
 alias scan-objc='/usr/local/bin/checker-276/scan-build'
 alias getPid='ps aux | grep -i'
 alias bchunk='/usr/bin/bchunk'
 alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
+alias iad='ssh -A ccooper@admin01.iad.sessionm.com'
+alias ewr='ssh -A ccooper@admin.ewr.sessionm.com'
 
 #will return all results minus grep, useful for ps
 grepv () {
@@ -153,6 +156,9 @@ create-rspec-dirs () {
  touch $1/features/support/env.rb; 
 }
 
+rspec-color () {
+ rspec $1 --format documentation --color;
+}
 
 alias crd='create-rspec-dirs'
 
