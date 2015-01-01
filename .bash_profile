@@ -49,14 +49,18 @@ export PS1='\n$(print_columns)\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W
 #   ------------------------------------------------------------
     export PATH="$PATH:/usr/local/bin/"
     export PATH="/usr/local/git/bin:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
-    alias go='/usr/local/go/bin/go'
+#    alias go='/usr/local/go/bin/go'
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
 export COCOS_CONSOLE_ROOT=/Users/Chris/Downloads/cocos2d-x-3.2/tools/cocos2d-console/bin
 export PATH=$COCOS_CONSOLE_ROOT:$PATH
 export NDK_ROOT=/usr/local/android-ndk-r10/
 export ANDROID_SDK_ROOT=/usr/local/android-sdk-macosx/
 export ANT_ROOT=/usr/local/apache-ant-1.9.4/
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export GOROOT=/usr/local/go
+export LSCOLORS=GxFxCxDxBxegedabagaced
+export GOPATH=~/src/gopath
+
 ##
 # Your previous /Users/Chris/.bash_profile file was backed up as /Users/Chris/.bash_profile.macports-saved_2014-08-22_at_20:26:22
 ##
@@ -92,6 +96,7 @@ alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
+alias ls='ls -G'			    # ls with color
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 cd() { builtin cd "$@"; ls; }               # Always list directory contents upon 'cd'
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
