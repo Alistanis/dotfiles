@@ -59,7 +59,7 @@ export ANT_ROOT=/usr/local/apache-ant-1.9.4/
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export GOROOT=/usr/local/go
 export LSCOLORS=GxFxCxDxBxegedabagaced
-export GOPATH=~/src/gopath
+export GOPATH=~/src/go/thunderbirds
 
 ##
 # Your previous /Users/Chris/.bash_profile file was backed up as /Users/Chris/.bash_profile.macports-saved_2014-08-22_at_20:26:22
@@ -130,7 +130,7 @@ alias bchunk='/usr/bin/bchunk'
 alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
 alias iad='ssh -A ccooper@admin01.iad.sessionm.com'
-alias ewr='ssh -A ccooper@admin.ewr.sessionm.com'
+alias ewr='ssh -A ccooper@admin.os.sessionm.com'
 
 #will return all results minus grep, useful for ps
 grepv () {
@@ -163,6 +163,14 @@ create-rspec-dirs () {
 
 rspec-color () {
  rspec $1 --format documentation --color;
+}
+
+run_meerkat(){
+go install sessionm/meerkat/meerkat_server && /bin/cp ./bin/meerkat_server ./src/sessionm/meerkat/meerkat_server/meerkat && ./src/sessionm/meerkat/meerkat_server/meerkat;
+}
+
+build_meerkat() {
+go install sessionm/meerkat/meerkat_server && /bin/cp ./bin/meerkat_server ./src/sessionm/meerkat/meerkat_server/meerkat;
 }
 
 alias crd='create-rspec-dirs'
