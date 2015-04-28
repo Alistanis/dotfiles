@@ -47,19 +47,41 @@ export PS1='\n$(print_columns)\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W
 
 #   Set Paths
 #   ------------------------------------------------------------
-    export PATH="$PATH:/usr/local/bin/"
-    export PATH="/usr/local/git/bin:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
+    export PATH="/usr/local/git/bin:/usr/local/bin:/usr/local:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 #    alias go='/usr/local/go/bin/go'
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
 export COCOS_CONSOLE_ROOT=/Users/Chris/Downloads/cocos2d-x-3.2/tools/cocos2d-console/bin
 export PATH=$COCOS_CONSOLE_ROOT:$PATH
-export NDK_ROOT=/usr/local/android-ndk-r10/
-export ANDROID_SDK_ROOT=/usr/local/android-sdk-macosx/
-export ANT_ROOT=/usr/local/apache-ant-1.9.4/
+export NDK_ROOT=/usr/local/android-ndk-r10
+export ANDROID_SDK_ROOT=/usr/local/android-sdk-macosx
+export ANT_ROOT=/usr/local/apache-ant-1.9.4
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
 export LSCOLORS=GxFxCxDxBxegedabagaced
-export GOPATH=~/src/go/thunderbirds
+export GOPATH=~/work/thunderbirds
+export CONFIGDIR=~/work/thunderbirds/config
+export PATH="$GOPATH/bin:$PATH"
+#locale
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
+#work specific variables
+export ADMIN=~/work/greyhound/admin
+export ADVERT=~/work/greyhound/advertiser
+export CMS=~/work/cms-content
+export CORE=~/work/greyhound/core
+export DEVELOPER=~/work/greyhound/developer
+export THUNDER=~/work/thunderbirds
+
+#work specific aliases
+alias admin="cd $ADMIN"
+alias advert="cd $ADVERT"
+alias cms="cd $CMS"
+alias core="cd $CORE"
+alias developer="cd $DEVELOPER"
+alias thunderbirds="cd $THUNDER"
 
 ##
 # Your previous /Users/Chris/.bash_profile file was backed up as /Users/Chris/.bash_profile.macports-saved_2014-08-22_at_20:26:22
@@ -171,6 +193,14 @@ go install sessionm/meerkat/meerkat_server && /bin/cp ./bin/meerkat_server ./src
 
 build_meerkat() {
 go install sessionm/meerkat/meerkat_server && /bin/cp ./bin/meerkat_server ./src/sessionm/meerkat/meerkat_server/meerkat;
+}
+
+run_mplaces(){
+go install sessionm/mplaces/mplaces_server && /bin/cp ./bin/mplaces_server ./src/sessionm/mplaces/mplaces_server/mplaces && ./src/sessionm/mplaces/mplaces_server/mplaces;
+}
+
+build_mplaces() {
+go install sessionm/mplaces/mplaces_server && /bin/cp ./bin/mplaces_server ./src/sessionm/mplaces/mplaces_server/mplaces;
 }
 
 alias crd='create-rspec-dirs'
