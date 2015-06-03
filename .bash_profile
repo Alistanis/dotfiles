@@ -83,6 +83,8 @@ alias core="cd $CORE"
 alias developer="cd $DEVELOPER"
 alias thunderbirds="cd $THUNDER"
 
+export meerkat=$THUNDER/src/sessionm/meerkat
+
 ##
 # Your previous /Users/Chris/.bash_profile file was backed up as /Users/Chris/.bash_profile.macports-saved_2014-08-22_at_20:26:22
 ##
@@ -154,6 +156,20 @@ alias reload='source ~/.bash_profile'
 alias iad='ssh -A ccooper@admin01.iad.sessionm.com'
 alias ewr='ssh -A ccooper@admin.os.sessionm.com'
 
+print_sessionm_ips(){
+	printf "Meerkat Production:       http://meerkat.iad.sessionm.com (10.100.82.108)\n"
+	printf "Meerkat QA:               10.100.104.188:1850\n"
+	printf "Hadoop Production Master: 10.100.101.124\n"
+	printf "Hadoop QA Master:         10.100.101.187\n"
+	printf "Mraid Deployment Server:  http://mraid-ci.prod.sessionm.com:4567 (10.100.71.215:4567)\n"
+	printf "IAD (admin01):		  admin01.iad.sessionm.com (10.100.1.53)\n"
+	printf "EWR (admin02):		  admin02.ewr.sessionm.com (10.0.0.70)\n"
+	printf "Redshift Production:	  10.100.21.222:5439\n"
+	printf "Redshift QA:		  10.100.21.222\n"
+	printf "MySQL Production:	  10.100.103.253\n"
+	printf "MySQL Test:		  mysql.s.sessionm.com\n"
+	printf "Infobright:		  10.100.103.20\n"
+}
 #will return all results minus grep, useful for ps
 grepv () {
  grep -i $1 | grep -v 'grep'	
