@@ -58,6 +58,7 @@ export ANT_ROOT=/usr/local/apache-ant-1.9.4
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
+export GO15VENDOREXPERIMENT=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 export GOPATH=~/work/thunderbirds
 export CONFIGDIR=~/work/thunderbirds/config
@@ -74,6 +75,7 @@ export CMS=~/work/cms-content
 export CORE=~/work/greyhound/core
 export DEVELOPER=~/work/greyhound/developer
 export THUNDER=~/work/thunderbirds
+export SYSADMIN=~/work/sysadmin
 
 #work specific aliases
 alias admin="cd $ADMIN"
@@ -90,6 +92,8 @@ export meerkat=$THUNDER/src/sessionm/meerkat
 ##
 source ~/.git-prompt.sh
 source ~/.bashrc
+
+eval $(docker-machine env)
 
 # MacPorts Installer addition on 2014-08-22_at_20:26:22: adding an appropriate PATH variable for use with MacPorts.
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
@@ -144,7 +148,9 @@ trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the 
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file on MacOS Desktop
 
-alias cloc='perl /usr/local/etc/cloc-1.62.pl'
+alias status='git status -uno'
+
+alias cloc='/usr/local/Cellar/cloc/1.64/bin/cloc'
 
 alias rubymine='/Applications/RubyMine.app/Contents/MacOS/rubymine'
 
@@ -155,6 +161,8 @@ alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
 alias iad='ssh -A ccooper@admin01.iad.sessionm.com'
 alias ewr='ssh -A ccooper@admin.os.sessionm.com'
+alias forward_prod_mysql='gtn -logtostderr -ssh_host=admin01.iad.sessionm.com:22 -remote_addr=10.100.103.80 -remote_port=3306 -local_port=3306'
+alias forward_prod_rabbitmq='gtn -logtostderr -ssh_host=admin01.iad.sessionm.com:22 -remote_addr=10.100.7.91 -remote_port=5672 -local_port=5672'
 
 print_sessionm_ips(){
 	printf "Meerkat Production:       http://meerkat.iad.sessionm.com (10.100.82.108)\n"
@@ -170,6 +178,20 @@ print_sessionm_ips(){
 	printf "MySQL Test:		  mysql.s.sessionm.com\n"
 	printf "Infobright:		  10.100.103.20\n"
 }
+
+git-add-modified() {
+	git add `git status | grep modified | sed 's/.*modified: *//'`
+}
+
+git-loc() {
+  for file in $(git ls-files); do \
+    echo $file; \
+    git blame --line-porcelain $file \
+        | grep  "^author " | sort | uniq -c | sort -nr; \
+    echo; \
+done
+}
+
 #will return all results minus grep, useful for ps
 grepv () {
  grep -i $1 | grep -v 'grep'	
@@ -237,6 +259,11 @@ alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\
 #   showa: to remind yourself of an alias (given some part of it)
 #   ------------------------------------------------------------
     showa () { /usr/bin/grep --color=always -i -a1 $@ ~/Library/init/bash/aliases.bash | grep -v '^\s*$' | less -FSRXc ; }
+
+
+fix-user-perms () {
+	sudo find ~ $TMPDIR.. -exec chflags -h nouchg,nouappnd,noschg,nosappnd {} + -exec chown -h $UID {} + -exec chmod +rw {} + -exec chmod -h -N {} + -type d -exec chmod -h +x {} + 2>&- ;
+}
 
 #   -------------------------------
 #   3.  FILE AND FOLDER MANAGEMENT
