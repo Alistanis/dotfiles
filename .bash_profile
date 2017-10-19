@@ -47,58 +47,35 @@ export PS1='\n$(print_columns)\n|\e[m\[[\e[0;36m\u\e[m@\e[1;32m\h\e[m \e[0;36m\W
 
 #   Set Paths
 #   ------------------------------------------------------------
-    export PATH="/usr/local/git/bin:/usr/local/bin:/usr/local:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 #    alias go='/usr/local/go/bin/go'
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/Users/Chris/Downloads/cocos2d-x-3.2/tools/cocos2d-console/bin
-export PATH=$COCOS_CONSOLE_ROOT:$PATH
-export NDK_ROOT=/usr/local/android-ndk-r10
-export ANDROID_SDK_ROOT=/usr/local/android-sdk-macosx
-export ANT_ROOT=/usr/local/apache-ant-1.9.4
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
-export GO15VENDOREXPERIMENT=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-export GOPATH=~/work/thunderbirds
-export CONFIGDIR=~/work/thunderbirds/config
+export GOPATH=~/work/polaris
 export PATH="$GOPATH/bin:$PATH"
+
+source ~/.aws_credentials.sh
+
 #locale
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-#work specific variables
-export ADMIN=~/work/greyhound/admin
-export ADVERT=~/work/greyhound/advertiser
-export CMS=~/work/cms-content
-export CORE=~/work/greyhound/core
-export DEVELOPER=~/work/greyhound/developer
-export THUNDER=~/work/thunderbirds
-export SYSADMIN=~/work/sysadmin
-
-#work specific aliases
-alias admin="cd $ADMIN"
-alias advert="cd $ADVERT"
-alias cms="cd $CMS"
-alias core="cd $CORE"
-alias developer="cd $DEVELOPER"
-alias thunderbirds="cd $THUNDER"
-
-export meerkat=$THUNDER/src/sessionm/meerkat
 
 ##
 # Your previous /Users/Chris/.bash_profile file was backed up as /Users/Chris/.bash_profile.macports-saved_2014-08-22_at_20:26:22
 ##
 source ~/.git-prompt.sh
-source ~/.bashrc
 
-eval $(docker-machine env)
+export NSONE_DEV_ROOT=~/workspace
+export NSONE_USERNAME=ccooper # <- Fill in your Unix username on production boxes.
+source $NSONE_DEV_ROOT/util/bash.sh
 
-# MacPorts Installer addition on 2014-08-22_at_20:26:22: adding an appropriate PATH variable for use with MacPorts.
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-# Finished adapting your PATH environment variable for use with MacPorts.
-
+export FWKNOP_KEY_ID=35466B90
+export NSONE_DEPLOY_PREHOOK=nsone-knock-all
+export NSONE_PREPROD_DEPLOY_PREHOOK="nsone-knock bastion.preprod.nsone.co"
+export FWKNOP_COMMAND_OVERRIDE='fwknop -A tcp/22 --gpg-recip fwknop-server --gpg-sign ${FWKNOP_KEY_ID} -R -D $1 --gpg-agent --resolve-url http://ip.beevek.org'
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
     export EDITOR=/usr/bin/vim
@@ -150,8 +127,6 @@ alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file
 
 alias status='git status -uno'
 
-alias cloc='/usr/local/Cellar/cloc/1.64/bin/cloc'
-
 alias rubymine='/Applications/RubyMine.app/Contents/MacOS/rubymine'
 
 alias scan-objc='/usr/local/bin/checker-276/scan-build'
@@ -159,24 +134,19 @@ alias getPid='ps aux | grep -i'
 alias bchunk='/usr/bin/bchunk'
 alias profile='vim ~/.bash_profile'
 alias reload='source ~/.bash_profile'
-alias iad='ssh -A ccooper@admin01.iad.sessionm.com'
-alias ewr='ssh -A ccooper@admin.os.sessionm.com'
-alias forward_prod_mysql='gtn -logtostderr -ssh_host=admin01.iad.sessionm.com:22 -remote_addr=10.100.103.80 -remote_port=3306 -local_port=3306'
-alias forward_prod_rabbitmq='gtn -logtostderr -ssh_host=admin01.iad.sessionm.com:22 -remote_addr=10.100.7.91 -remote_port=5672 -local_port=5672'
+#alias iad='ssh -A ccooper@admin01.iad.sessionm.com'
+#alias ewr='ssh -A ccooper@admin.os.sessionm.com'
+#alias forward_prod_mysql='gtn -logtostderr -ssh_host=admin01.iad.sessionm.com:22 -remote_addr=10.100.103.80 -remote_port=3306 -local_port=3306'
+#alias forward_prod_rabbitmq='gtn -logtostderr -ssh_host=admin01.iad.sessionm.com:22 -remote_addr=10.100.7.91 -remote_port=5672 -local_port=5672'
 
-print_sessionm_ips(){
-	printf "Meerkat Production:       http://meerkat.iad.sessionm.com (10.100.82.108)\n"
-	printf "Meerkat QA:               10.100.104.188:1850\n"
-	printf "Hadoop Production Master: 10.100.101.124\n"
-	printf "Hadoop QA Master:         10.100.101.187\n"
-	printf "Mraid Deployment Server:  http://mraid-ci.prod.sessionm.com:4567 (10.100.71.215:4567)\n"
-	printf "IAD (admin01):		  admin01.iad.sessionm.com (10.100.1.53)\n"
-	printf "EWR (admin02):		  admin02.ewr.sessionm.com (10.0.0.70)\n"
-	printf "Redshift Production:	  10.100.21.222:5439\n"
-	printf "Redshift QA:		  10.100.21.222\n"
-	printf "MySQL Production:	  10.100.103.253\n"
-	printf "MySQL Test:		  mysql.s.sessionm.com\n"
-	printf "Infobright:		  10.100.103.20\n"
+alias platform='cd $GOPATH/src/github.com/nsone/platform'
+
+function gotest-forever() {
+	while true; do go test; if [[ $? != 0 ]]; then break; fi; done
+}
+
+function 2fa() {
+        $NSONE_DEV_ROOT/util/2factor.py ${1:-my.nsone.net}
 }
 
 git-add-modified() {
@@ -225,23 +195,6 @@ rspec-color () {
  rspec $1 --format documentation --color;
 }
 
-run_meerkat(){
-go install sessionm/meerkat/meerkat_server && /bin/cp ./bin/meerkat_server ./src/sessionm/meerkat/meerkat_server/meerkat && ./src/sessionm/meerkat/meerkat_server/meerkat;
-}
-
-build_meerkat() {
-go install sessionm/meerkat/meerkat_server && /bin/cp ./bin/meerkat_server ./src/sessionm/meerkat/meerkat_server/meerkat;
-}
-
-run_mplaces(){
-go install sessionm/mplaces/mplaces_server && /bin/cp ./bin/mplaces_server ./src/sessionm/mplaces/mplaces_server/mplaces && ./src/sessionm/mplaces/mplaces_server/mplaces;
-}
-
-build_mplaces() {
-go install sessionm/mplaces/mplaces_server && /bin/cp ./bin/mplaces_server ./src/sessionm/mplaces/mplaces_server/mplaces;
-}
-
-alias crd='create-rspec-dirs'
 
 alias psql_dev='psql greyhound_development'
 alias beeroclock='ruby -e "n=Time.now; puts \"Beer in #{Time.at(Time.new(n.year,n.month,n.day,16)-n).gmtime.strftime(\"%kh %Mm %Ss\")}\""'
@@ -464,4 +417,5 @@ httpHeaders () { /usr/bin/curl -I -L $@ ; }             # httpHeaders:      Grab
 #   then use: ~/Dev/Perl/randBytes 1048576 > 10MB.dat
 
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH="/usr/local/sbin:$PATH"
+export PKG_CONFIG_PATH=/usr/local/opt/openssl@1.1/lib/pkgconfig
